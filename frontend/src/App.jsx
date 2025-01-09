@@ -1,25 +1,35 @@
-import { useState } from 'react'
-import BackgroundTrailAnimation from './components/backgroundTrail'
-import Sidebar from './components/sideBar'
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import BackgroundTrailAnimation from './components/backgroundTrail';
+import Sidebar from './components/sideBar';
+import Dashboard from './routes/Dashboard';
+import Transactions from './routes/Transactions';
+import Entries from './routes/Entries';
+import Exits from './routes/Exit';
 import '@fortawesome/fontawesome-free/css/all.min.css';
-
+import Main from './components/main';
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    
-    <div className='relative min-h-screen'>
-      <Sidebar/>
-      <BackgroundTrailAnimation/>
-      <div className="ml-[16rem] lg:ml-[25%] p-6 flex justify-center items-center z-10">
-        <h1 className='text-3xl font-semibold text-black '>
-          Gerenciador de Finanças
-        </h1>
+    <Router>
+      <div className="relative min-h-screen flex">
+        {/* Sidebar */}
+        <Sidebar />
+
+        {/* Área principal */}
+        <div className="flex-1">
+          <BackgroundTrailAnimation />
+          <Main>
+            <Routes>
+              <Route path="/" element={<Dashboard />} />
+              <Route path="/transactions" element={<Transactions />} />
+              <Route path="/entries" element={<Entries />} />
+              <Route path="/exits" element={<Exits />} />
+            </Routes>
+          </Main>
+        </div>
       </div>
-      
-    </div>
-  )
+    </Router>
+  );
 }
 
-export default App
+export default App;
